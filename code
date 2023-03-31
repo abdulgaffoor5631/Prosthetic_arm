@@ -1,0 +1,47 @@
+#include<Servo.h>
+Servo s1,s2,s3,s4,s5;
+void setup() 
+{
+  Serial.begin(9600);
+  s1.attach(2);
+  s2.attach(3);
+  s3.attach(4);
+  s4.attach(5);
+  s5.attach(6);
+}
+ 
+void loop() 
+{
+  int emg = analogRead(A1);
+  float voltage = emg*(1023.0/500.0);       
+  if (voltage>1200){
+    int cls();
+    Serial.print("Voltage :");
+    Serial.println(voltage);
+    Serial.println("Hand Closed");
+    delay(1000);
+    s1.write(125);
+  }
+  else if(voltage<1200){
+    int opn();
+    Serial.print("Voltage :");
+    Serial.println(voltage);
+    Serial.println("Hand Opened");
+    delay(1000);
+    s1.write(0); 
+  }
+}
+int cls(){
+  Serial.println("Hand Closed");
+    s1.write(90);
+    s1.write(90);
+    s3.write(0);
+    s4.write(0); 
+}
+int opn(){
+  Serial.println("Hand Opened");
+    s1.write(0);
+    s1.write(0);
+    s3.write(90);
+    s4.write(90); 
+}
